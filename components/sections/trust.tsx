@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { Shield, Handshake, BadgeCheck, type LucideIcon } from "lucide-react";
 import { VALUES } from "@/lib/constants";
-import { CrosshatchPattern } from "@/components/patterns";
 
 const iconMap: Record<string, LucideIcon> = {
   Shield,
@@ -14,7 +13,6 @@ const iconMap: Record<string, LucideIcon> = {
 export function Trust() {
   return (
     <section id="nosotros" className="relative py-16 sm:py-24 lg:py-32 bg-bg-secondary scroll-mt-16">
-      <CrosshatchPattern />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
