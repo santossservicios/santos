@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Camera, Clock, ArrowUpRight, ImageIcon } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
+import { DiagonalPattern } from "@/components/patterns";
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -56,12 +57,13 @@ const cardVariant = {
 export function Portfolio() {
   return (
     <section className="relative py-16 sm:py-24 lg:py-32 bg-bg-secondary">
+      <DiagonalPattern />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

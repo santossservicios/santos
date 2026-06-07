@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SERVICES } from "@/lib/constants";
+import { BrickPattern } from "@/components/patterns";
 
 const iconMap: Record<string, LucideIcon> = {
   Droplets,
@@ -41,7 +42,8 @@ const cardVariant = {
 export function Services() {
   return (
     <section id="servicios" className="relative py-16 sm:py-24 lg:py-32 scroll-mt-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <BrickPattern />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

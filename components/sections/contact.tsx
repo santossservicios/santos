@@ -13,6 +13,7 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 import { CONTACT, getWhatsAppUrl } from "@/lib/constants";
+import { WallPanelPattern } from "@/components/patterns";
 
 function ContactLink({
   icon: Icon,
@@ -32,7 +33,7 @@ function ContactLink({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-3 sm:gap-4 rounded-xl border border-border-default bg-bg-card p-3.5 sm:p-4 transition-all duration-300 hover:border-border-hover hover:bg-bg-card-hover active:scale-[0.98]"
+      className="group flex items-center gap-3 sm:gap-4 rounded-xl border border-border-hover bg-bg-primary/80 p-3.5 sm:p-4 transition-all duration-300 hover:border-brand-cyan/30 hover:bg-bg-primary active:scale-[0.98]"
     >
       <div
         className="flex shrink-0 items-center justify-center rounded-lg p-2.5 sm:p-3"
@@ -53,7 +54,8 @@ function ContactLink({
 export function Contact() {
   return (
     <section id="contacto" className="relative py-16 sm:py-24 lg:py-32 scroll-mt-16">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <WallPanelPattern />
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -75,7 +77,7 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="space-y-4"
+          className="rounded-2xl border border-brand-cyan/20 bg-bg-secondary/90 backdrop-blur-md p-5 sm:p-8 space-y-4 shadow-[0_0_40px_rgba(58,203,255,0.05)]"
         >
           <ContactLink
             icon={MessageCircle}
@@ -106,7 +108,7 @@ export function Contact() {
             color="#3ACBFF"
           />
 
-          <div className="pt-4">
+          <div className="pt-2">
             <a
               href={getWhatsAppUrl()}
               target="_blank"
