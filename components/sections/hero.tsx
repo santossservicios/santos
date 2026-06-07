@@ -31,12 +31,18 @@ const item = {
 function GridBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Izquierda */}
       <div className="absolute top-[10%] left-[5%] w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-brand-cyan/10 blur-[100px] sm:blur-[140px]" />
-      <div className="absolute top-[50%] right-[10%] w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-brand-cyan/8 blur-[90px] sm:blur-[120px]" />
-      <div className="absolute bottom-[15%] left-[20%] w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-brand-cyan/6 blur-[80px] sm:blur-[110px]" />
-      <div className="absolute top-[25%] right-[30%] w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-brand-cyan/7 blur-[70px] sm:blur-[100px]" />
-      <div className="absolute bottom-[40%] left-[60%] w-40 h-40 sm:w-56 sm:h-56 rounded-full bg-brand-cyan/5 blur-[80px] sm:blur-[100px]" />
-      <div className="absolute top-[70%] right-[60%] w-52 h-52 sm:w-72 sm:h-72 rounded-full bg-brand-cyan/9 blur-[90px] sm:blur-[130px]" />
+      <div className="absolute bottom-[15%] left-[15%] w-56 h-56 sm:w-72 sm:h-72 rounded-full bg-brand-cyan/6 blur-[80px] sm:blur-[110px]" />
+      <div className="absolute top-[55%] left-[8%] w-44 h-44 sm:w-60 sm:h-60 rounded-full bg-brand-cyan/8 blur-[70px] sm:blur-[100px]" />
+      {/* Centro */}
+      <div className="absolute top-[25%] left-[40%] w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-brand-cyan/5 blur-[70px] sm:blur-[100px]" />
+      <div className="absolute bottom-[30%] left-[50%] w-40 h-40 sm:w-56 sm:h-56 rounded-full bg-brand-cyan/4 blur-[80px] sm:blur-[100px]" />
+      {/* Derecha */}
+      <div className="absolute top-[8%] right-[5%] w-64 h-64 sm:w-88 sm:h-88 rounded-full bg-brand-cyan/9 blur-[90px] sm:blur-[130px]" />
+      <div className="absolute top-[40%] right-[10%] w-56 h-56 sm:w-80 sm:h-80 rounded-full bg-brand-cyan/7 blur-[80px] sm:blur-[120px]" />
+      <div className="absolute bottom-[10%] right-[8%] w-60 h-60 sm:w-76 sm:h-76 rounded-full bg-brand-cyan/8 blur-[90px] sm:blur-[120px]" />
+      <div className="absolute top-[70%] right-[25%] w-44 h-44 sm:w-64 sm:h-64 rounded-full bg-brand-cyan/6 blur-[70px] sm:blur-[110px]" />
     </div>
   );
 }
