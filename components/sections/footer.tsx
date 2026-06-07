@@ -19,7 +19,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
           <div>
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="Santos Servicios"
               width={180}
               height={50}
@@ -100,6 +100,11 @@ export function Footer() {
           </p>
           <p className="text-xs sm:text-sm text-text-muted">
             Calidad &middot; Compromiso &middot; Garantía
+          </p>
+        </div>
+        <div className="mt-4 pt-4 border-t border-border-default text-center">
+          <p className="text-xs text-text-muted">
+            Creado por Ignacio Lavezzari
           </p>
         </div>
       </div>

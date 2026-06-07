@@ -122,7 +122,7 @@ export function Hero() {
       >
         <motion.div variants={item} className="mb-8">
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Santos Servicios"
             width={400}
             height={200}
