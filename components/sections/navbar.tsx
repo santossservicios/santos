@@ -51,16 +51,9 @@ export function Navbar() {
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <a href="#inicio" className="flex items-center gap-2">
-              <Image
-                src="/logo.png"
-                alt="Santos Servicios"
-                width={140}
-                height={40}
-                className="h-8 sm:h-10 w-auto"
-                style={{ width: "auto" }}
-                priority
-              />
+            <a href="#inicio" className="flex items-center gap-1.5">
+              <span className="text-lg sm:text-xl font-black italic text-brand-cyan">SANTOS</span>
+              <span className="text-lg sm:text-xl font-bold italic text-white">SERVICIOS</span>
             </a>
 
             <div className="hidden md:flex items-center gap-8">

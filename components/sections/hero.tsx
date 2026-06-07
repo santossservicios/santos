@@ -120,13 +120,14 @@ export function Hero() {
         animate="show"
         className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center"
       >
-        <motion.div variants={item} className="mb-8">
+        <motion.div variants={item} className="-mb-6 sm:-mb-8">
           <Image
             src="/logo.png"
             alt="Santos Servicios"
             width={400}
-            height={200}
-            className="mx-auto h-24 sm:h-40 lg:h-52 w-auto drop-shadow-[0_0_30px_rgba(58,203,255,0.15)]"
+            height={400}
+            unoptimized
+            className="mx-auto h-36 sm:h-56 lg:h-72 w-auto"
             style={{ width: "auto" }}
             priority
           />
@@ -134,7 +135,7 @@ export function Hero() {
 
         <motion.h1
           variants={item}
-          className="text-3xl sm:text-5xl lg:text-7xl font-black italic tracking-tight mb-4"
+          className="text-3xl sm:text-5xl lg:text-7xl font-black italic tracking-tight mb-1"
         >
           <span className="bg-gradient-to-r from-white via-white to-text-secondary bg-clip-text text-transparent">
             Soluciones integrales
@@ -145,7 +146,7 @@ export function Hero() {
           </span>
         </motion.h1>
 
-        <motion.div variants={item} className="flex justify-center mb-6">
+        <motion.div variants={item} className="flex justify-center mb-4">
           <TypewriterTagline />
         </motion.div>
 
