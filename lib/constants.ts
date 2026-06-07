@@ -1,6 +1,6 @@
 export const CONTACT = {
   whatsapp: "5491136325263",
-  whatsappMessage: "Hola! Me interesa consultar por sus servicios.",
+  whatsappMessage: "Hola, me interesa consultar por ...",
   email: "santossservicios@gmail.com",
   instagram: "https://www.instagram.com/santos.servicios/",
 } as const;
