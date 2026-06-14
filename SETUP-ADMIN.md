@@ -29,8 +29,8 @@ npx vercel deploy --prod --yes
 ```
 
 ## 4) Usar el admin
-- Entrá a `https://TU-DOMINIO/admin` (no está linkeado en el sitio: solo vos
-  sabés la dirección).
+- Entrá a `https://TU-DOMINIO/juanpasantos` (no está linkeado en el sitio:
+  solo vos sabés la dirección).
 - Ingresá con la `ADMIN_PASSWORD`.
 - Elegí la sección (Galería de Trabajos o un servicio), tocá **Subir fotos**,
   ordená con las flechas y borrá con la papelera.
