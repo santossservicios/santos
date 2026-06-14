@@ -387,9 +387,9 @@
                     const imgs = d.images || [];
                     if (!imgs.length) return;
                     const gridEl = document.getElementById('gallery-grid');
-                    gridEl.className = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4';
+                    gridEl.className = 'columns-2 md:columns-3 lg:columns-4 gap-4';
                     gridEl.innerHTML = imgs.map(im =>
-                        '<div class="relative group overflow-hidden border-2 border-surface-variant hover:border-primary-container transition-colors cursor-pointer aspect-square" data-url="' + im.url + '"><img src="' + im.url + '" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/></div>'
+                        '<div class="mb-4 break-inside-avoid relative group overflow-hidden border-2 border-surface-variant hover:border-primary-container transition-colors cursor-pointer" data-url="' + im.url + '"><img src="' + im.url + '" loading="lazy" class="w-full h-auto block group-hover:opacity-90 transition-opacity"/></div>'
                     ).join('');
                     gridEl.querySelectorAll('[data-url]').forEach(el =>
                         el.addEventListener('click', () => openLightbox(el.getAttribute('data-url'))));
@@ -402,16 +402,17 @@
                 const placeholder = '<div class="col-span-full border-2 border-dashed border-outline-variant/40 p-6 text-center text-on-surface-variant font-bold flex flex-col items-center gap-2"><span class="material-symbols-outlined text-3xl text-primary-container">photo_camera</span>Próximamente: fotos de ' + title + '.</div>';
                 try {
                     const r = await fetch('/api/images?section=servicio-' + key);
-                    if (!r.ok) { modalGallery.innerHTML = placeholder; return; }
+                    if (!r.ok) { modalGallery.className = 'grid grid-cols-1 gap-3'; modalGallery.innerHTML = placeholder; return; }
                     const d = await r.json();
                     const imgs = d.images || [];
-                    if (!imgs.length) { modalGallery.innerHTML = placeholder; return; }
+                    if (!imgs.length) { modalGallery.className = 'grid grid-cols-1 gap-3'; modalGallery.innerHTML = placeholder; return; }
+                    modalGallery.className = 'columns-2 sm:columns-3 gap-3';
                     modalGallery.innerHTML = imgs.map(im =>
-                        '<div class="relative overflow-hidden border-2 border-surface-variant hover:border-primary-container cursor-pointer aspect-square" data-url="' + im.url + '"><img src="' + im.url + '" loading="lazy" class="w-full h-full object-cover"/></div>'
+                        '<div class="mb-3 break-inside-avoid overflow-hidden border-2 border-surface-variant hover:border-primary-container cursor-pointer" data-url="' + im.url + '"><img src="' + im.url + '" loading="lazy" class="w-full h-auto block"/></div>'
                     ).join('');
                     modalGallery.querySelectorAll('[data-url]').forEach(el =>
                         el.addEventListener('click', () => openLightbox(el.getAttribute('data-url'))));
-                } catch (e) { modalGallery.innerHTML = placeholder; }
+                } catch (e) { modalGallery.className = 'grid grid-cols-1 gap-3'; modalGallery.innerHTML = placeholder; }
             }
 
             // Service modal
