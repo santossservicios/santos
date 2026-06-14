@@ -399,20 +399,19 @@
 
             // Fotos de cada servicio desde Cloudinary
             async function loadServiceImages(key, title) {
-                const placeholder = '<div class="col-span-full border-2 border-dashed border-outline-variant/40 p-6 text-center text-on-surface-variant font-bold flex flex-col items-center gap-2"><span class="material-symbols-outlined text-3xl text-primary-container">photo_camera</span>Próximamente: fotos de ' + title + '.</div>';
                 try {
                     const r = await fetch('/api/images?section=servicio-' + key);
-                    if (!r.ok) { modalGallery.className = 'grid grid-cols-1 gap-3'; modalGallery.innerHTML = placeholder; return; }
+                    if (!r.ok) { modalGallery.innerHTML = ''; return; }
                     const d = await r.json();
                     const imgs = d.images || [];
-                    if (!imgs.length) { modalGallery.className = 'grid grid-cols-1 gap-3'; modalGallery.innerHTML = placeholder; return; }
+                    if (!imgs.length) { modalGallery.innerHTML = ''; return; }
                     modalGallery.className = 'columns-2 sm:columns-3 gap-3';
                     modalGallery.innerHTML = imgs.map(im =>
                         '<div class="mb-3 break-inside-avoid overflow-hidden border-2 border-surface-variant hover:border-primary-container cursor-pointer" data-url="' + im.url + '"><img src="' + im.url + '" loading="lazy" class="w-full h-auto block"/></div>'
                     ).join('');
                     modalGallery.querySelectorAll('[data-url]').forEach(el =>
                         el.addEventListener('click', () => openLightbox(el.getAttribute('data-url'))));
-                } catch (e) { modalGallery.className = 'grid grid-cols-1 gap-3'; modalGallery.innerHTML = placeholder; }
+                } catch (e) { modalGallery.innerHTML = ''; }
             }
 
             // Service modal
@@ -431,7 +430,7 @@
                 modalTitle.textContent = s.title;
                 modalDesc.textContent = s.desc;
                 modalWa.href = "https://wa.me/5491136325263?text=" + encodeURIComponent("Hola, me interesa consultar por " + s.title + " ...");
-                modalGallery.innerHTML = '<div class="col-span-full text-on-surface-variant italic py-2">Cargando fotos...</div>';
+                modalGallery.innerHTML = '';
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 loadServiceImages(key, s.title);
