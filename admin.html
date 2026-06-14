@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Admin · Santos Servicios</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet"/>
+<style>
+  :root { --cyan:#3acbff; --red:#a90111; --bg:#131313; --surface:#201f1f; }
+  * { font-family: Montserrat, sans-serif; }
+  body { background: var(--bg); color: #e5e2e1; }
+  .hard-shadow { box-shadow: 4px 4px 0 0 var(--red); }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- LOGIN -->
+<div id="login-view" class="min-h-screen flex items-center justify-center px-4">
+  <form id="login-form" class="w-full max-w-sm bg-[#201f1f] border-[3px] border-[var(--cyan)] hard-shadow p-8">
+    <h1 class="text-2xl font-black italic mb-1"><span class="text-[var(--cyan)]">SANTOS</span> ADMIN</h1>
+    <p class="text-sm text-gray-400 mb-6">Panel privado de administración</p>
+    <label class="block text-xs font-bold uppercase tracking-wide text-gray-400 mb-1">Contraseña</label>
+    <input id="password" type="password" required class="w-full bg-[#131313] border-2 border-gray-700 px-4 py-3 mb-4 focus:border-[var(--cyan)] outline-none" placeholder="••••••••"/>
+    <button type="submit" class="w-full bg-[var(--cyan)] text-[#003546] font-black italic uppercase py-3 hover:brightness-110 transition">Ingresar</button>
+    <p id="login-error" class="text-[#ff8a80] text-sm mt-3 hidden"></p>
+  </form>
+</div>
+
+<!-- PANEL -->
+<div id="panel-view" class="hidden max-w-4xl mx-auto px-4 py-8">
+  <div class="flex items-center justify-between mb-8 flex-wrap gap-4">
+    <h1 class="text-2xl font-black italic"><span class="text-[var(--cyan)]">SANTOS</span> ADMIN</h1>
+    <button id="logout-btn" class="text-sm font-bold uppercase border-2 border-gray-700 px-4 py-2 hover:border-[var(--red)] hover:text-[#ff8a80] transition">Salir</button>
+  </div>
+
+  <div class="bg-[#201f1f] border-2 border-gray-800 p-6 mb-6">
+    <label class="block text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">Sección a editar</label>
+    <div class="flex flex-wrap gap-3 items-center">
+      <select id="section-select" class="bg-[#131313] border-2 border-gray-700 px-4 py-3 focus:border-[var(--cyan)] outline-none flex-1 min-w-[200px]"></select>
+      <button id="upload-btn" class="bg-[var(--cyan)] text-[#003546] font-black italic uppercase px-6 py-3 hover:brightness-110 transition">+ Subir fotos</button>
+    </div>
+    <p class="text-xs text-gray-500 mt-3">Tip: usá las flechas para ordenar (arriba = aparece primero) y la papelera para borrar.</p>
+  </div>
+
+  <div id="status" class="hidden mb-4 px-4 py-3 text-sm font-bold"></div>
+
+  <div id="grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+  <p id="empty" class="hidden text-gray-500 italic py-12 text-center">Todavía no hay fotos en esta sección. Tocá "Subir fotos".</p>
+</div>
+
+<script>
+const SECTIONS = [
+  { key: "trabajos", label: "Galería de Trabajos" },
+  { key: "servicio-impermeabilizacion", label: "Servicio · Impermeabilización" },
+  { key: "servicio-techos", label: "Servicio · Techos" },
+  { key: "servicio-durlock", label: "Servicio · Durlock" },
+  { key: "servicio-pintura", label: "Servicio · Pintura" },
+  { key: "servicio-herreria", label: "Servicio · Herrería" },
+  { key: "servicio-yeso", label: "Servicio · Yeso" },
+  { key: "servicio-parquizacion", label: "Servicio · Parquizaciones" },
+  { key: "servicio-mas", label: "Servicio · Y mucho más" },
+];
+
+const loginView = document.getElementById("login-view");
+const panelView = document.getElementById("panel-view");
+const loginForm = document.getElementById("login-form");
+const loginError = document.getElementById("login-error");
+const sectionSelect = document.getElementById("section-select");
+const grid = document.getElementById("grid");
+const emptyMsg = document.getElementById("empty");
+const statusBox = document.getElementById("status");
+let cloudConfig = { cloudName: "", apiKey: "" };
+let currentImages = [];
+
+function showStatus(msg, ok = true) {
+  statusBox.textContent = msg;
+  statusBox.className = "mb-4 px-4 py-3 text-sm font-bold " + (ok ? "bg-[#0e3a13] text-[#9be7a0]" : "bg-[#3a0e0e] text-[#ff8a80]");
+  statusBox.classList.remove("hidden");
+  clearTimeout(showStatus._t);
+  showStatus._t = setTimeout(() => statusBox.classList.add("hidden"), 4000);
+}
+
+async function checkSession() {
+  try {
+    const r = await fetch("/api/session");
+    const d = await r.json();
+    return !!d.authed;
+  } catch { return false; }
+}
+
+async function enterPanel() {
+  loginView.classList.add("hidden");
+  panelView.classList.remove("hidden");
+  SECTIONS.forEach((s) => {
+    const opt = document.createElement("option");
+    opt.value = s.key; opt.textContent = s.label;
+    sectionSelect.appendChild(opt);
+  });
+  try {
+    const r = await fetch("/api/config");
+    cloudConfig = await r.json();
+  } catch {}
+  loadImages();
+}
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  loginError.classList.add("hidden");
+  const password = document.getElementById("password").value;
+  const r = await fetch("/api/login", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password }),
+  });
+  if (r.ok) { enterPanel(); }
+  else {
+    const d = await r.json().catch(() => ({}));
+    loginError.textContent = d.error || "Error al ingresar";
+    loginError.classList.remove("hidden");
+  }
+});
+
+document.getElementById("logout-btn").addEventListener("click", async () => {
+  await fetch("/api/logout", { method: "POST" });
+  location.reload();
+});
+
+sectionSelect.addEventListener("change", loadImages);
+
+async function loadImages() {
+  const section = sectionSelect.value;
+  grid.innerHTML = '<p class="col-span-full text-gray-500 italic">Cargando...</p>';
+  emptyMsg.classList.add("hidden");
+  try {
+    const r = await fetch("/api/images?section=" + encodeURIComponent(section));
+    const d = await r.json();
+    currentImages = d.images || [];
+  } catch { currentImages = []; }
+  render();
+}
+
+function render() {
+  grid.innerHTML = "";
+  if (!currentImages.length) { emptyMsg.classList.remove("hidden"); return; }
+  emptyMsg.classList.add("hidden");
+  currentImages.forEach((img, i) => {
+    const card = document.createElement("div");
+    card.className = "relative border-2 border-gray-800 group";
+    card.innerHTML = `
+      <img src="${img.url}" class="w-full h-40 object-cover" loading="lazy"/>
+      <div class="absolute top-1 left-1 bg-black/70 text-xs px-2 py-0.5 font-bold">${i + 1}</div>
+      <div class="absolute inset-x-0 bottom-0 bg-black/70 flex justify-between items-center p-1">
+        <div class="flex gap-1">
+          <button data-act="up" data-i="${i}" class="px-2 py-1 text-sm hover:text-[var(--cyan)] disabled:opacity-30" ${i === 0 ? "disabled" : ""}>▲</button>
+          <button data-act="down" data-i="${i}" class="px-2 py-1 text-sm hover:text-[var(--cyan)] disabled:opacity-30" ${i === currentImages.length - 1 ? "disabled" : ""}>▼</button>
+        </div>
+        <button data-act="del" data-i="${i}" class="px-2 py-1 text-sm text-[#ff8a80] hover:brightness-125">🗑</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+  grid.querySelectorAll("button[data-act]").forEach((b) => {
+    b.addEventListener("click", () => handleAction(b.dataset.act, Number(b.dataset.i)));
+  });
+}
+
+async function handleAction(act, i) {
+  if (act === "del") {
+    if (!confirm("¿Borrar esta foto?")) return;
+    const img = currentImages[i];
+    const r = await fetch("/api/admin/delete", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ public_id: img.public_id }),
+    });
+    if (r.ok) { currentImages.splice(i, 1); render(); persistOrder(); showStatus("Foto borrada"); }
+    else showStatus("No se pudo borrar", false);
+    return;
+  }
+  const j = act === "up" ? i - 1 : i + 1;
+  if (j < 0 || j >= currentImages.length) return;
+  [currentImages[i], currentImages[j]] = [currentImages[j], currentImages[i]];
+  render();
+  persistOrder();
+}
+
+async function persistOrder() {
+  const order = currentImages.map((x) => x.public_id);
+  try {
+    await fetch("/api/admin/reorder", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ order }),
+    });
+  } catch {}
+}
+
+document.getElementById("upload-btn").addEventListener("click", () => {
+  if (!cloudConfig.cloudName || !cloudConfig.apiKey) {
+    showStatus("Faltan credenciales de Cloudinary (env vars)", false);
+    return;
+  }
+  const section = sectionSelect.value;
+  const widget = cloudinary.createUploadWidget(
+    {
+      cloudName: cloudConfig.cloudName,
+      apiKey: cloudConfig.apiKey,
+      uploadSignature: (cb, params) => {
+        fetch("/api/admin/sign", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ paramsToSign: params }),
+        }).then((r) => r.json()).then((d) => cb(d.signature));
+      },
+      folder: "santos/" + section,
+      tags: [section],
+      context: { order: String(Date.now()) },
+      multiple: true,
+      sources: ["local", "camera", "url"],
+      styles: { palette: { window: "#201f1f", sourceBg: "#131313", windowBorder: "#3acbff", tabIcon: "#3acbff", link: "#3acbff", action: "#3acbff", inactiveTabIcon: "#bcc8d0", textDark: "#000000", textLight: "#e5e2e1" } },
+    },
+    (error, result) => {
+      if (!error && result && result.event === "success") {
+        showStatus("Foto subida");
+      }
+      if (!error && result && result.event === "close") {
+        loadImages();
+      }
+    }
+  );
+  widget.open();
+});
+
+// init
+(async () => {
+  if (await checkSession()) enterPanel();
+})();
+</script>
+</body></html>

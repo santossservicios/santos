@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SANTOS SERVICIOS - Calidad | Compromiso | Garantía</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#131313",
+                        "primary-fixed-dim": "#6ad3ff",
+                        "on-primary": "#003546",
+                        "background": "#131313",
+                        "primary-container": "#3acbff",
+                        "on-secondary-container": "#ffb3ab",
+                        "surface-container-lowest": "#0e0e0e",
+                        "surface-variant": "#353534",
+                        "surface-container": "#201f1f",
+                        "outline-variant": "#3d484f",
+                        "secondary-container": "#a90111",
+                        "primary": "#a5e1ff",
+                        "surface-container-high": "#2a2a2a",
+                        "on-surface-variant": "#bcc8d0",
+                        "outline": "#879299",
+                        "on-primary-container": "#00536c",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-container": "#ffb3ab",
+                        "surface-container-low": "#1c1b1b",
+                        "on-background": "#e5e2e1"
+                    },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "container-max": "1280px",
+                        "border-width-thick": "3px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Montserrat"], "display-lg-mobile": ["Montserrat"],
+                        "display-lg": ["Montserrat"], "body-md": ["Montserrat"],
+                        "label-bold": ["Montserrat"], "body-lg": ["Montserrat"], "headline-lg": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "800" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.0", "fontWeight": "900" }],
+                        "display-lg": ["64px", { "lineHeight": "1.0", "fontWeight": "900" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-bold": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.1", "fontWeight": "900" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .hard-shadow { box-shadow: 4px 4px 0px 0px rgba(169,1,17,1); }
+        .hard-shadow-primary { box-shadow: 4px 4px 0px 0px rgba(58,203,255,1); }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .brand-icon { width: 1em; height: 1em; display: inline-block; vertical-align: middle; }
+
+        /* Overlay helper for textured sections */
+        .tex { background-size: cover; background-position: center; background-repeat: no-repeat; }
+        .tex-brick    { background-image: linear-gradient(rgba(19,19,19,.90), rgba(19,19,19,.92)), url('tex-brick.png'); }
+        .tex-concrete { background-image: linear-gradient(rgba(19,19,19,.90), rgba(19,19,19,.92)), url('tex-concrete.png'); }
+        .tex-wood     { background-image: linear-gradient(rgba(19,19,19,.86), rgba(19,19,19,.90)), url('tex-wood.png'); }
+
+        /* Lightbox / Modal overlays */
+        #lightbox { display:none; position:fixed; z-index:999; inset:0; background:rgba(0,0,0,.9); }
+        #lightbox.active { display:flex; justify-content:center; align-items:center; }
+        #lightbox img { max-width:90%; max-height:90%; border:3px solid #3acbff; }
+
+        #service-modal { display:none; position:fixed; z-index:998; inset:0; background:rgba(0,0,0,.85); padding:16px; }
+        #service-modal.active { display:flex; justify-content:center; align-items:center; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface fixed top-0 w-full z-50 border-b-border-width-thick border-primary-container shadow-[4px_4px_0px_0px_rgba(169,1,17,1)]">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<a href="#inicio" class="flex items-baseline gap-1.5 select-none">
+<span class="text-xl md:text-2xl font-black italic text-primary-container leading-none">SANTOS</span>
+<span class="text-xl md:text-2xl font-bold italic text-on-background leading-none">SERVICIOS</span>
+</a>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-6">
+<a class="text-primary-container border-b-2 border-primary-container font-headline-md italic uppercase text-headline-md px-1 py-1" href="#inicio">INICIO</a>
+<a class="text-on-surface hover:text-primary-container transition-colors font-headline-md italic uppercase text-headline-md px-1 py-1" href="#servicios">SERVICIOS</a>
+<a class="text-on-surface hover:text-primary-container transition-colors font-headline-md italic uppercase text-headline-md px-1 py-1" href="#proyectos">PROYECTOS</a>
+</nav>
+<a class="bg-secondary-container text-white text-label-bold font-label-bold italic uppercase px-5 py-3 rounded-sm border-2 border-transparent hover:border-white transition-all duration-300 hard-shadow-primary hover:translate-y-[-2px] active:translate-y-1 active:translate-x-1 active:shadow-none" href="#contacto">
+                    CONTACTANOS
+                </a>
+</div>
+</div>
+</header>
+<main class="pt-20 md:pt-24">
+<!-- Hero Section -->
+<section class="tex tex-wood min-h-[88vh] flex items-center relative overflow-hidden px-margin-mobile md:px-margin-desktop py-16" id="inicio">
+<div class="absolute inset-0 z-0 opacity-50 pointer-events-none">
+<div class="absolute top-[12%] left-[6%] w-96 h-96 rounded-full bg-primary-container/20 blur-[120px]"></div>
+<div class="absolute bottom-[12%] right-[8%] w-96 h-96 rounded-full bg-primary-container/15 blur-[120px]"></div>
+<div class="absolute top-[40%] right-[35%] w-72 h-72 rounded-full bg-secondary-container/10 blur-[100px]"></div>
+</div>
+<div class="max-w-container-max mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+<div class="flex flex-col gap-6 reveal order-2 md:order-1">
+<h1 class="text-display-lg-mobile md:text-display-lg font-display-lg-mobile md:font-display-lg italic text-on-background drop-shadow-md">
+                        SOLUCIONES<br/>
+<span class="text-primary-container">INTEGRALES</span><br/>
+                        PARA TU HOGAR
+                    </h1>
+<div class="border-l-border-width-thick border-secondary-container pl-4">
+<p class="text-headline-md font-headline-md italic text-on-surface-variant">Calidad | Compromiso | Garantía</p>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface max-w-lg font-bold">
+                        Más de una década transformando hogares y comercios con excelencia técnica y precisión estructural.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<a class="bg-secondary-container text-white font-headline-md text-headline-md italic uppercase px-8 py-4 text-center border-2 border-secondary-container hover:bg-transparent hover:text-secondary-container transition-all duration-300 hard-shadow-primary" href="#contacto">PEDÍ TU PRESUPUESTO</a>
+<a class="border-2 border-primary-container text-primary-container font-headline-md text-headline-md italic uppercase px-8 py-4 text-center hover:bg-primary-container hover:text-on-primary-container transition-all duration-300" href="#servicios">VER SERVICIOS</a>
+</div>
+<div class="mt-4 flex items-center gap-4">
+<a class="flex items-center gap-2 text-on-surface hover:text-primary-container transition-colors font-label-bold text-label-bold uppercase tracking-widest" href="https://instagram.com/santos.servicios" target="_blank" rel="noopener">
+<svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                            @santos.servicios
+                        </a>
+</div>
+</div>
+<div class="flex justify-center items-center reveal delay-200 order-1 md:order-2">
+<img src="logo.png" alt="Santos Servicios" class="w-full max-w-sm md:max-w-md h-auto"/>
+</div>
+</div>
+</section>
+<!-- Separator -->
+<div class="w-full h-8 bg-surface-variant flex overflow-hidden opacity-50 relative z-20">
+<div class="w-[200%] h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#a90111_10px,#a90111_20px)]"></div>
+</div>
+<!-- Servicios Section -->
+<section class="tex tex-brick py-24 px-margin-mobile md:px-margin-desktop relative" id="servicios">
+<div class="max-w-container-max mx-auto relative z-10">
+<div class="mb-16 reveal text-center md:text-left">
+<h2 class="text-display-lg-mobile md:text-headline-lg font-display-lg-mobile md:font-headline-lg italic text-primary-container uppercase border-b-border-width-thick border-surface-variant pb-4 inline-block">Nuestros Servicios</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-4 font-bold">Tocá cada servicio para ver más detalles y fotos.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- cards generated below -->
+<button data-service="impermeabilizacion" class="service-card text-left bg-surface/80 backdrop-blur-sm border-2 border-outline-variant p-6 hover:border-primary-container transition-colors group reveal">
+<span class="material-symbols-outlined text-5xl text-primary-container mb-4 block group-hover:scale-110 transition-transform" style="font-variation-settings:'FILL' 1;">water_drop</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-on-surface mb-2">Impermeabilización</h3>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">Protección total contra filtraciones y humedad.</p>
+</button>
+<button data-service="techos" class="service-card text-left bg-surface/80 backdrop-blur-sm border-2 border-outline-variant p-6 hover:border-primary-container transition-colors group reveal delay-100">
+<span class="material-symbols-outlined text-5xl text-primary-container mb-4 block group-hover:scale-110 transition-transform" style="font-variation-settings:'FILL' 1;">roofing</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-on-surface mb-2">Techos</h3>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">Reparación, mantenimiento y estructuras nuevas.</p>
+</button>
+<button data-service="durlock" class="service-card text-left bg-surface/80 backdrop-blur-sm border-2 border-outline-variant p-6 hover:border-primary-container transition-colors group reveal delay-200">
+<span class="material-symbols-outlined text-5xl text-primary-container mb-4 block group-hover:scale-110 transition-transform" style="font-variation-settings:'FILL' 1;">grid_view</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-on-surface mb-2">Durlock</h3>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">Construcción en seco, tabiques y cielorrasos.</p>
+</button>
+<button data-service="pintura" class="service-card text-left bg-surface/80 backdrop-blur-sm border-2 border-outline-variant p-6 hover:border-primary-container transition-colors group reveal delay-300">
+<span class="material-symbols-outlined text-5xl text-primary-container mb-4 block group-hover:scale-110 transition-transform" style="font-variation-settings:'FILL' 1;">format_paint</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-on-surface mb-2">Pintura</h3>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">Interiores, exteriores y texturados.</p>
+</button>
+<button data-service="herreria" class="service-card text-left bg-surface/80 backdrop-blur-sm border-2 border-outline-variant p-6 hover:border-primary-container transition-colors group reveal">
+<span class="material-symbols-outlined text-5xl text-primary-container mb-4 block group-hover:scale-110 transition-transform" style="font-variation-settings:'FILL' 1;">handyman</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-on-surface mb-2">Herrería</h3>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">Estructuras metálicas, rejas y portones.</p>
+</button>
+<button data-service="yeso" class="service-card text-left bg-surface/80 backdrop-blur-sm border-2 border-outline-variant p-6 hover:border-primary-container transition-colors group reveal delay-100">
+<span class="material-symbols-outlined text-5xl text-primary-container mb-4 block group-hover:scale-110 transition-transform" style="font-variation-settings:'FILL' 1;">texture</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-on-surface mb-2">Yeso</h3>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">Terminaciones finas y molduras.</p>
+</button>
+<button data-service="parquizacion" class="service-card text-left bg-surface/80 backdrop-blur-sm border-2 border-outline-variant p-6 hover:border-primary-container transition-colors group reveal delay-200">
+<span class="material-symbols-outlined text-5xl text-primary-container mb-4 block group-hover:scale-110 transition-transform" style="font-variation-settings:'FILL' 1;">yard</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-on-surface mb-2">Parquizaciones</h3>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">Diseño y mantenimiento de espacios verdes.</p>
+</button>
+<button data-service="mas" class="service-card text-left bg-secondary-container/90 backdrop-blur-sm border-2 border-secondary-container p-6 flex flex-col justify-center items-center text-center hover:bg-surface-container transition-colors group reveal delay-300">
+<span class="material-symbols-outlined text-5xl mb-4 text-white group-hover:text-secondary-container transition-colors" style="font-variation-settings:'FILL' 1;">add_circle</span>
+<h3 class="text-headline-md font-headline-md uppercase italic text-white group-hover:text-secondary-container mb-2">Y Mucho Más</h3>
+<p class="text-body-md font-body-md text-white/80 group-hover:text-secondary-container/80 font-bold">Consultanos por tu proyecto.</p>
+</button>
+</div>
+</div>
+</section>
+<!-- Por Que Elegirnos -->
+<section class="tex tex-concrete py-24 px-margin-mobile md:px-margin-desktop border-t-border-width-thick border-b-border-width-thick border-surface-variant relative">
+<div class="max-w-container-max mx-auto relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex flex-col items-start border-l-border-width-thick border-primary-container pl-6 reveal bg-surface/50 backdrop-blur-sm p-6">
+<span class="text-display-lg font-display-lg italic text-surface-variant mb-2 font-black">01</span>
+<h3 class="text-headline-lg font-headline-lg uppercase italic text-on-background mb-2">Calidad</h3>
+<p class="text-body-lg font-body-lg text-on-surface-variant font-bold">Utilizamos materiales premium y técnicas avanzadas para asegurar durabilidad.</p>
+</div>
+<div class="flex flex-col items-start border-l-border-width-thick border-secondary-container pl-6 reveal delay-100 bg-surface/50 backdrop-blur-sm p-6">
+<span class="text-display-lg font-display-lg italic text-surface-variant mb-2 font-black">02</span>
+<h3 class="text-headline-lg font-headline-lg uppercase italic text-on-background mb-2">Compromiso</h3>
+<p class="text-body-lg font-body-lg text-on-surface-variant font-bold">Plazos cumplidos rigurosamente. Tu tiempo es nuestra prioridad.</p>
+</div>
+<div class="flex flex-col items-start border-l-border-width-thick border-primary-container pl-6 reveal delay-200 bg-surface/50 backdrop-blur-sm p-6">
+<span class="text-display-lg font-display-lg italic text-surface-variant mb-2 font-black">03</span>
+<h3 class="text-headline-lg font-headline-lg uppercase italic text-on-background mb-2">Garantía</h3>
+<p class="text-body-lg font-body-lg text-on-surface-variant font-bold">Trabajos respaldados. Confianza total en cada obra entregada.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Proyectos Gallery -->
+<section class="tex tex-wood py-24 px-margin-mobile md:px-margin-desktop relative" id="proyectos">
+<div class="max-w-container-max mx-auto relative z-10">
+<div class="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-16 reveal">
+<h2 class="text-display-lg-mobile md:text-headline-lg font-display-lg-mobile md:font-headline-lg italic text-primary-container uppercase">Galería de Trabajos</h2>
+<span class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-widest hidden md:block border-b-border-width-thick border-primary-container pb-2 font-bold">Resultados Reales</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]" id="gallery-grid">
+<div class="col-span-2 row-span-2 relative group overflow-hidden border-2 border-surface-variant hover:border-primary-container transition-colors cursor-pointer gallery-item reveal">
+<div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors z-10"></div>
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&amp;w=800&amp;auto=format&amp;fit=crop')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500"></div>
+<div class="absolute bottom-4 left-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity"><span class="bg-primary-container text-on-primary-container font-label-bold text-label-bold px-2 py-1 uppercase">Pintura Interior</span></div>
+</div>
+<div class="col-span-1 row-span-1 relative group overflow-hidden border-2 border-surface-variant hover:border-primary-container transition-colors cursor-pointer gallery-item reveal delay-100">
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504307651254-35680f356f12?q=80&amp;w=400&amp;auto=format&amp;fit=crop')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500"></div>
+</div>
+<div class="col-span-1 row-span-2 relative group overflow-hidden border-2 border-surface-variant hover:border-primary-container transition-colors cursor-pointer gallery-item reveal delay-200">
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1541888087545-09677e5ee50f?q=80&amp;w=400&amp;auto=format&amp;fit=crop')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500"></div>
+</div>
+<div class="col-span-1 row-span-1 relative group overflow-hidden border-2 border-surface-variant hover:border-primary-container transition-colors cursor-pointer gallery-item reveal delay-300">
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1584282381023-4e4c9e426e7d?q=80&amp;w=400&amp;auto=format&amp;fit=crop')] bg-cover bg-center group-hover:scale-105 transition-transform duration-500"></div>
+</div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant mt-6 italic">Pronto vas a ver acá nuestras obras reales. Mientras tanto, seguinos en Instagram.</p>
+</div>
+</section>
+<!-- Instagram CTA -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop bg-background text-center relative overflow-hidden" id="instagram">
+<div class="absolute top-0 left-0 w-full h-2 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#3acbff_10px,#3acbff_20px)]"></div>
+<div class="max-w-3xl mx-auto flex flex-col items-center reveal">
+<svg class="w-16 h-16 text-primary-container mb-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+<h2 class="text-headline-lg font-headline-lg italic text-on-background uppercase mb-6">Seguinos para ver el día a día de nuestras obras</h2>
+<a class="bg-transparent border-border-width-thick border-primary-container text-primary-container font-headline-md text-headline-md italic uppercase px-12 py-4 hover:bg-primary-container hover:text-on-primary-container transition-all duration-300 hard-shadow inline-flex items-center gap-4" href="https://instagram.com/santos.servicios" target="_blank" rel="noopener">
+                    VER INSTAGRAM
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- Contacto -->
+<section class="tex tex-brick py-24 px-margin-mobile md:px-margin-desktop border-t-border-width-thick border-secondary-container relative" id="contacto">
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10 items-stretch">
+<div class="reveal">
+<h2 class="text-display-lg-mobile md:text-headline-lg font-display-lg-mobile md:font-headline-lg italic text-on-background uppercase mb-8">Contacto<span class="text-secondary-container">.</span></h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-8 font-bold">Estamos listos para tu próximo proyecto. Contactanos por cualquiera de nuestros canales.</p>
+<ul class="flex flex-col gap-4">
+<li>
+<a href="https://wa.me/5491136325263?text=Hola%2C%20me%20interesa%20consultar%20por%20..." target="_blank" rel="noopener" class="flex items-center gap-4 bg-surface/70 backdrop-blur-sm p-4 rounded-sm border border-outline-variant/40 hover:border-primary-container transition-colors group">
+<span class="w-12 h-12 shrink-0 bg-surface flex items-center justify-center border-2 border-outline-variant text-[#25D366]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.358.101 11.892c0 2.096.549 4.142 1.595 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.581 0 11.94-5.358 11.943-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></span>
+<span><span class="block text-label-bold font-label-bold uppercase text-on-surface-variant font-bold">WhatsApp</span><span class="text-headline-md font-headline-md italic text-on-surface group-hover:text-primary-container transition-colors">+54 9 11 3632-5263</span></span>
+</a>
+</li>
+<li>
+<a href="mailto:santossservicios@gmail.com" class="flex items-center gap-4 bg-surface/70 backdrop-blur-sm p-4 rounded-sm border border-outline-variant/40 hover:border-primary-container transition-colors group">
+<span class="w-12 h-12 shrink-0 bg-surface flex items-center justify-center border-2 border-outline-variant text-primary-container"><span class="material-symbols-outlined">mail</span></span>
+<span class="min-w-0"><span class="block text-label-bold font-label-bold uppercase text-on-surface-variant font-bold">Email</span><span class="text-body-lg font-body-lg text-on-surface group-hover:text-primary-container transition-colors font-bold break-all">santossservicios@gmail.com</span></span>
+</a>
+</li>
+<li>
+<a href="https://instagram.com/santos.servicios" target="_blank" rel="noopener" class="flex items-center gap-4 bg-surface/70 backdrop-blur-sm p-4 rounded-sm border border-outline-variant/40 hover:border-primary-container transition-colors group">
+<span class="w-12 h-12 shrink-0 bg-surface flex items-center justify-center border-2 border-outline-variant text-[#E4405F]"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></span>
+<span><span class="block text-label-bold font-label-bold uppercase text-on-surface-variant font-bold">Instagram</span><span class="text-body-lg font-body-lg text-on-surface group-hover:text-primary-container transition-colors font-bold">@santos.servicios</span></span>
+</a>
+</li>
+</ul>
+</div>
+<div class="flex items-stretch reveal delay-200">
+<a class="w-full bg-[#25D366] text-black font-headline-lg text-headline-lg italic uppercase px-8 py-12 text-center border-4 border-transparent hover:border-white transition-all duration-300 hard-shadow flex flex-col items-center justify-center gap-4 group" href="https://wa.me/5491136325263?text=Hola%2C%20me%20interesa%20consultar%20por%20..." target="_blank" rel="noopener">
+<svg class="w-16 h-16 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.358.101 11.892c0 2.096.549 4.142 1.595 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.581 0 11.94-5.358 11.943-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        CHATEÁ CON NOSOTROS
+                    </a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t-border-width-thick border-secondary-container w-full py-12">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto gap-8 text-center md:text-left">
+<div class="flex flex-col items-center md:items-start gap-2">
+<a href="#inicio" class="flex items-baseline gap-1.5"><span class="text-2xl font-black italic text-primary-container">SANTOS</span><span class="text-2xl font-bold italic text-on-background">SERVICIOS</span></a>
+<p class="text-body-md font-body-md text-on-surface-variant font-bold">CALIDAD | COMPROMISO | GARANTÍA</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors font-label-bold uppercase" href="#servicios">Servicios</a>
+<a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors font-label-bold uppercase" href="#proyectos">Proyectos</a>
+<a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors font-label-bold uppercase" href="#instagram">Instagram</a>
+<a class="text-body-md font-body-md text-on-surface-variant hover:text-primary transition-colors font-label-bold uppercase" href="#contacto">WhatsApp</a>
+</nav>
+<div class="flex flex-col items-center md:items-end text-label-bold font-label-bold text-on-surface-variant">
+<span>© 2026 Santos Servicios</span>
+<span class="text-xs opacity-50 mt-1">Creado por Ignacio Lavezzari</span>
+</div>
+</div>
+</footer>
+<!-- Floating WhatsApp Button -->
+<a class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-black w-16 h-16 flex items-center justify-center rounded-sm hard-shadow hover:-translate-y-1 transition-transform border-2 border-transparent hover:border-white" href="https://wa.me/5491136325263?text=Hola%2C%20me%20interesa%20consultar%20por%20..." target="_blank" rel="noopener" aria-label="WhatsApp">
+<svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.358.101 11.892c0 2.096.549 4.142 1.595 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.581 0 11.94-5.358 11.943-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<!-- Service Modal -->
+<div id="service-modal">
+<div class="relative w-full max-w-2xl bg-surface border-border-width-thick border-primary-container hard-shadow max-h-[90vh] overflow-y-auto">
+<button id="close-service-modal" class="absolute top-3 right-3 z-10 text-on-surface hover:text-secondary-container bg-surface-container p-1 rounded-sm"><span class="material-symbols-outlined">close</span></button>
+<div class="p-8">
+<div class="flex items-center gap-4 mb-4">
+<span id="modal-icon" class="material-symbols-outlined text-5xl text-primary-container" style="font-variation-settings:'FILL' 1;">build</span>
+<h3 id="modal-title" class="text-headline-lg font-headline-lg italic uppercase text-on-background"></h3>
+</div>
+<p id="modal-desc" class="text-body-lg font-body-lg text-on-surface-variant font-bold mb-6"></p>
+<div id="modal-gallery" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+<a id="modal-wa" href="#" target="_blank" rel="noopener" class="mt-8 inline-flex items-center justify-center gap-3 w-full bg-[#25D366] text-black font-headline-md text-headline-md italic uppercase px-6 py-4 hard-shadow hover:border-white border-2 border-transparent transition-all">
+<svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.358.101 11.892c0 2.096.549 4.142 1.595 5.945L0 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.581 0 11.94-5.358 11.943-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    CONSULTAR POR ESTE SERVICIO
+                </a>
+</div>
+</div>
+</div>
+<!-- Lightbox Overlay -->
+<div class="cursor-pointer" id="lightbox">
+<img alt="Ampliada" id="lightbox-img" src=""/>
+<span class="absolute top-6 right-6 text-white material-symbols-outlined text-4xl">close</span>
+</div>
+<!-- Scripts -->
+<script>
+        const SERVICES = {
+            impermeabilizacion: { icon: "water_drop", title: "Impermeabilización", desc: "Aplicamos membranas y tratamientos impermeabilizantes en techos, terrazas, muros y cimientos. Eliminamos filtraciones y humedad de raíz, protegiendo tu propiedad a largo plazo." },
+            techos: { icon: "roofing", title: "Techos", desc: "Construcción, reparación y mantenimiento de todo tipo de techos: chapa, tejas y losas. Solucionamos goteras, reforzamos estructuras y hacemos techos nuevos." },
+            durlock: { icon: "grid_view", title: "Durlock", desc: "Construcción en seco: tabiques divisorios, cielorrasos, revestimientos y nichos. Soluciones rápidas, limpias y prolijas para renovar ambientes." },
+            pintura: { icon: "format_paint", title: "Pintura", desc: "Pintura interior y exterior: látex, esmalte y texturados. Preparación de superficies, enduido y terminaciones de primera para un acabado impecable." },
+            herreria: { icon: "handyman", title: "Herrería", desc: "Trabajos en hierro y metal: rejas, portones, puertas, escaleras, barandas y estructuras a medida. Soldadura y herrería de obra." },
+            yeso: { icon: "texture", title: "Yeso", desc: "Revoques finos, molduras, cornisas y terminaciones en yeso. Detalles que dan prolijidad y vida a cada ambiente." },
+            parquizacion: { icon: "yard", title: "Parquizaciones", desc: "Diseño, armado y mantenimiento de jardines y espacios verdes. Césped, plantas, riego y puesta en valor de tus exteriores." },
+            mas: { icon: "add_circle", title: "Y Mucho Más", desc: "Hacemos de todo para tu hogar o comercio. Si no ves el trabajo que necesitás en la lista, consultanos: seguro podemos ayudarte." }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Reveal animations
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) { entry.target.classList.add('active'); obs.unobserve(entry.target); }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Lightbox
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            function openLightbox(url) { lightboxImg.src = url; lightbox.classList.add('active'); }
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const inner = item.querySelector('div[class*="bg-[url"]');
+                    if (!inner) return;
+                    const bgImg = inner.style.backgroundImage || window.getComputedStyle(inner).backgroundImage;
+                    openLightbox(bgImg.slice(4, -1).replace(/"/g, ""));
+                });
+            });
+            lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+
+            // Galería de Trabajos desde Cloudinary (si hay backend + fotos cargadas)
+            async function loadGallery() {
+                try {
+                    const r = await fetch('/api/images?section=trabajos');
+                    if (!r.ok) return;
+                    const d = await r.json();
+                    const imgs = d.images || [];
+                    if (!imgs.length) return;
+                    const gridEl = document.getElementById('gallery-grid');
+                    gridEl.className = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4';
+                    gridEl.innerHTML = imgs.map(im =>
+                        '<div class="relative group overflow-hidden border-2 border-surface-variant hover:border-primary-container transition-colors cursor-pointer aspect-square" data-url="' + im.url + '"><img src="' + im.url + '" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/></div>'
+                    ).join('');
+                    gridEl.querySelectorAll('[data-url]').forEach(el =>
+                        el.addEventListener('click', () => openLightbox(el.getAttribute('data-url'))));
+                } catch (e) {}
+            }
+            loadGallery();
+
+            // Fotos de cada servicio desde Cloudinary
+            async function loadServiceImages(key, title) {
+                const placeholder = '<div class="col-span-full border-2 border-dashed border-outline-variant/40 p-6 text-center text-on-surface-variant font-bold flex flex-col items-center gap-2"><span class="material-symbols-outlined text-3xl text-primary-container">photo_camera</span>Próximamente: fotos de ' + title + '.</div>';
+                try {
+                    const r = await fetch('/api/images?section=servicio-' + key);
+                    if (!r.ok) { modalGallery.innerHTML = placeholder; return; }
+                    const d = await r.json();
+                    const imgs = d.images || [];
+                    if (!imgs.length) { modalGallery.innerHTML = placeholder; return; }
+                    modalGallery.innerHTML = imgs.map(im =>
+                        '<div class="relative overflow-hidden border-2 border-surface-variant hover:border-primary-container cursor-pointer aspect-square" data-url="' + im.url + '"><img src="' + im.url + '" loading="lazy" class="w-full h-full object-cover"/></div>'
+                    ).join('');
+                    modalGallery.querySelectorAll('[data-url]').forEach(el =>
+                        el.addEventListener('click', () => openLightbox(el.getAttribute('data-url'))));
+                } catch (e) { modalGallery.innerHTML = placeholder; }
+            }
+
+            // Service modal
+            const modal = document.getElementById('service-modal');
+            const modalIcon = document.getElementById('modal-icon');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-desc');
+            const modalGallery = document.getElementById('modal-gallery');
+            const modalWa = document.getElementById('modal-wa');
+            const closeModalBtn = document.getElementById('close-service-modal');
+
+            function openServiceModal(key) {
+                const s = SERVICES[key];
+                if (!s) return;
+                modalIcon.textContent = s.icon;
+                modalTitle.textContent = s.title;
+                modalDesc.textContent = s.desc;
+                modalWa.href = "https://wa.me/5491136325263?text=" + encodeURIComponent("Hola, me interesa consultar por " + s.title + " ...");
+                modalGallery.innerHTML = '<div class="col-span-full text-on-surface-variant italic py-2">Cargando fotos...</div>';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                loadServiceImages(key, s.title);
+            }
+            function closeServiceModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
+
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', () => openServiceModal(card.getAttribute('data-service')));
+            });
+            closeModalBtn.addEventListener('click', closeServiceModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeServiceModal(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeServiceModal(); lightbox.classList.remove('active'); } });
+        });
+    </script>
+</body></html>
